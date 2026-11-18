@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block title %}Add User{% endblock %}
+{% block heading %}Create User Account{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width:500px;margin:30px auto;">
+    <h2>Add New User</h2>
+    <p>Create an account for an Admin or Staff member.</p>
+
+    <form method="POST" action="{{ url_for('add_user') }}">
+        <label>Username</label>
+        <input type="text" name="username" required minlength="3"
+               placeholder="Enter username">
+
+        <label>Password</label>
+        <input type="password" name="password" required minlength="8"
+               placeholder="Create password">
+
+        <label>User Role</label>
+        <select name="role" required>
+            <option value="staff">Staff</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary"
+                style="margin-top:20px;width:100%;">
+            Create User
+        </button>
+    </form>
+
+    <p style="margin-top:15px;">
+        <a href="{{ url_for('users') }}">Back to User Management</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block heading %}Welcome Back{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width:450px;margin:50px auto;">
+    <h2>StockWise Login</h2>
+    <p>Please enter your account details.</p>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <label>Username</label>
+        <input type="text" name="username" required
+               placeholder="Enter username">
+
+        <label>Password</label>
+        <input type="password" name="password" required
+               placeholder="Enter password">
+
+        <button type="submit" class="btn btn-primary"
+                style="margin-top:20px;width:100%;">
+            Login
+        </button>
+    </form>
+</div>
+{% endblock %}
