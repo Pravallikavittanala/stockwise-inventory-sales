@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}{{ mode }} product{% endblock %}{% block heading %}{{ mode }} product{% endblock %}{% block content %}
+<div class="intro"><div><h1>{{ mode }} product</h1><p>Enter the product details below.</p></div><a href="{{ url_for('products') }}">← Back to products</a></div>
+<section class="panel form-panel"><form method="post" class="form">
+<label>Product name *<input name="product_name" required maxlength="100" value="{{ product.product_name or '' }}" placeholder="e.g. Notebook"></label>
+<label>Category<input name="category" maxlength="50" value="{{ product.category or '' }}" placeholder="e.g. Stationery"></label>
+<div class="form-row"><label>Price (₹) *<input type="number" name="price" min="0" step="0.01" required value="{{ product.price if product.price is defined else '' }}"></label>
+<label>Quantity *<input type="number" name="quantity" min="0" required value="{{ product.quantity if product.quantity is defined else 0 }}"></label></div>
+<label>Low stock alert level<input type="number" name="low_stock_limit" min="0" value="{{ product.low_stock_limit if product.low_stock_limit is defined else 5 }}"><small>Alert when stock reaches this quantity or lower.</small></label>
+<div class="form-actions"><a class="btn soft" href="{{ url_for('products') }}">Cancel</a><button class="btn primary">{{ mode }} product</button></div></form></section>{% endblock %}

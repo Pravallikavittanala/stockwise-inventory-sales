@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Reports{% endblock %}{% block heading %}Reports{% endblock %}{% block content %}
+<div class="intro"><div><h1>Reports & insights</h1><p>A view of sales activity and product performance.</p></div></div>
+<div class="stats two"><div class="stat"><label>Today's sales · {{ today.strftime('%d %B %Y') }}</label><strong>₹{{ "%.2f"|format(summary.amount or 0) }}</strong></div><div class="stat"><label>Units sold today</label><strong>{{ summary.units or 0 }}</strong></div></div>
+<section class="panel section"><div class="panel-head"><div><h2>Product-wise summary</h2><p>Current stock and sales performance</p></div></div>
+{% if rows %}<div class="table-scroll"><table><tr><th>Product</th><th>Category</th><th>Current stock</th><th>Units sold</th><th>Revenue</th></tr>{% for r in rows %}<tr><td class="strong">{{ r.product_name }}</td><td>{{ r.category or '—' }}</td><td>{{ r.quantity }}</td><td>{{ r.units_sold }}</td><td>₹{{ "%.2f"|format(r.revenue or 0) }}</td></tr>{% endfor %}</table></div>{% else %}<div class="empty"><b>No report data</b><p>Add products and record sales to generate reports.</p></div>{% endif %}</section>{% endblock %}

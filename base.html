@@ -1,0 +1,83 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}StockWise{% endblock %} | Inventory & Sales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <script defer src="{{ url_for('static',filename='script.js') }}"></script>
+</head>
+
+<body>
+
+{% if current_user.is_authenticated %}
+
+<aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}">
+        <b class="logo">S</b>
+        <span>StockWise<small>INVENTORY & SALES</small></span>
+    </a>
+
+    <div class="nav-label">WORKSPACE</div>
+
+    <nav>
+        <a href="{{ url_for('dashboard') }}">▦ &nbsp; Dashboard</a>
+        <a href="{{ url_for('products') }}">▤ &nbsp; Products</a>
+        <a href="{{ url_for('sales') }}">↗ &nbsp; Sales</a>
+
+        {% if current_user.role == 'admin' %}
+        <a href="{{ url_for('reports') }}">▥ &nbsp; Reports</a>
+        <a href="{{ url_for('users') }}">👥 &nbsp; Manage Users</a>
+        {% endif %}
+    </nav>
+
+    <div class="side-bottom">
+        <i></i> Local database app
+    </div>
+</aside>
+
+{% endif %}
+
+<main class="main">
+
+    <header class="topbar">
+        <div>
+            <small>INVENTORY MANAGEMENT</small>
+            <b>{% block heading %}Dashboard{% endblock %}</b>
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <div>
+            <span>{{ current_user.username }} ({{ current_user.role|title }})</span>
+            <form method="POST" action="{{ url_for('logout') }}"
+                  style="display:inline;">
+                 <button type="submit" class="btn btn-primary"
+                         style="margin-left:10px;">Logout</button>
+            </form>
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="content">
+
+        {% with messages=get_flashed_messages(with_categories=true) %}
+            {% for category,message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+                <button class="close" type="button">×</button>
+            </div>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            StockWise · Inventory and Sales Management for Small Business
+        </footer>
+
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Dashboard{% endblock %}{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<div class="intro"><div><h1>Good day 👋</h1><p>Here’s what’s happening with your store.</p></div><a class="btn primary" href="{{ url_for('add_product') }}">＋ Add product</a></div>
+<div class="stats">
+<div class="stat"><label>Total products</label><strong>{{ stats.total_products }}</strong><small>Products in catalogue</small></div>
+<div class="stat"><label>Units in stock</label><strong>{{ stats.total_stock }}</strong><small>Available quantity</small></div>
+<div class="stat"><label>Low stock items</label><strong>{{ stats.low_stock }}</strong><small>At or below alert level</small></div>
+<div class="stat"><label>Total sales</label><strong>₹{{ "%.2f"|format(stats.total_sales or 0) }}</strong><small>Recorded sales value</small></div></div>
+<div class="columns"><section class="panel"><div class="panel-head"><div><h2>Recent sales</h2><p>Latest transactions</p></div><a href="{{ url_for('sales') }}">View all →</a></div>
+{% if recent %}<div class="table-scroll"><table><tr><th>Product</th><th>Qty</th><th>Amount</th><th>Date</th></tr>{% for s in recent %}<tr><td class="strong">{{ s.product_name }}</td><td>{{ s.quantity_sold }}</td><td>₹{{ "%.2f"|format(s.total_amount or 0) }}</td><td>{{ s.sale_date.strftime('%d %b %Y') if s.sale_date else '—' }}</td></tr>{% endfor %}</table></div>{% else %}<div class="empty"><b>No sales recorded yet</b><p>Record a sale to see it here.</p><a class="btn soft" href="{{ url_for('sales') }}">Record sale</a></div>{% endif %}</section>
+<section class="panel"><div class="panel-head"><div><h2>Low stock alert</h2><p>Products needing attention</p></div><a href="{{ url_for('products') }}">Products →</a></div>
+{% if low %}{% for p in low %}<div class="alert"><b>{{ p.product_name }}</b><span>{{ p.quantity }} left</span></div>{% endfor %}{% else %}<div class="empty"><b>Stock looks good</b><p>No products are below their alert level.</p></div>{% endif %}</section></div>{% endblock %}

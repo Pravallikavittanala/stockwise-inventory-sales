@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+{% block heading %}Products{% endblock %}
+
+{% block content %}
+
+<div class="intro">
+    <div>
+        <h1>Product catalogue</h1>
+        <p>View and maintain products and stock levels.</p>
+    </div>
+
+    {% if current_user.role == 'admin' %}
+    <a class="btn primary" href="{{ url_for('add_product') }}">
+        ＋ Add product
+    </a>
+    {% endif %}
+</div>
+
+<section class="panel">
+
+    <form class="toolbar" method="get">
+        <input name="q" value="{{ q }}" placeholder="Search product or category">
+        <button class="btn soft">Search</button>
+
+        {% if q %}
+        <a href="{{ url_for('products') }}">Clear</a>
+        {% endif %}
+    </form>
+
+    {% if products %}
+
+    <div class="table-scroll">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Status</th>
+
+                {% if current_user.role == 'admin' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+
+            {% for p in products %}
+            <tr>
+                <td class="strong">
+                    {{ p.product_name }}
+                    <small class="sub">#{{ p.product_id }}</small>
+                </td>
+
+                <td>{{ p.category or '—' }}</td>
+                <td>₹{{ "%.2f"|format(p.price) }}</td>
+                <td>{{ p.quantity }}</td>
+
+                <td>
+                    {% if p.quantity <= p.low_stock_limit %}
+                    <span class="pill low">Low stock</span>
+                    {% else %}
+                    <span class="pill good">In stock</span>
+                    {% endif %}
+                </td>
+
+                {% if current_user.role == 'admin' %}
+                <td class="actions">
+                    <a href="{{ url_for('edit_product',pid=p.product_id) }}">
+                        Edit
+                    </a>
+
+                    <form method="post"
+                          action="{{ url_for('delete_product',pid=p.product_id) }}"
+                          data-confirm="Delete this product? Products with sales history cannot be deleted.">
+
+                        <button class="link danger">Delete</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+        <b>No products found</b>
+        <p>No matching products were found.</p>
+
+        {% if current_user.role == 'admin' %}
+        <a class="btn primary" href="{{ url_for('add_product') }}">
+            Add product
+        </a>
+        {% endif %}
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
