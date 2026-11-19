@@ -3,3 +3,4 @@ mysql-connector-python>=8.0
 python-dotenv>=1.0
 Flask-Login>=0.6.3
 Werkzeug>=3.0
+gunicorn>=23.0,<24.0
