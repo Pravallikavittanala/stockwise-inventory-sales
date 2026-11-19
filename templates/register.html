@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | StockWise</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            background:
+                linear-gradient(rgba(10, 25, 45, 0.48),
+                                rgba(10, 25, 45, 0.48)),
+                url("{{ url_for('static', filename='images/stockwise-login-background.png') }}")
+                center/cover no-repeat fixed;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 470px;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #1769aa;
+            color: white;
+            border-radius: 12px;
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .brand h1 {
+            color: #173653;
+            font-size: 29px;
+        }
+
+        .brand p {
+            color: #64748b;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #183b5b;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            background: white;
+        }
+
+        input:focus {
+            border-color: #1769aa;
+            box-shadow: 0 0 0 3px rgba(23,105,170,0.12);
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 65px;
+        }
+
+        .toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #1769aa;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #1769aa;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #104d80;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 22px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #1769aa;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .flash {
+            padding: 11px;
+            margin-bottom: 15px;
+            border-radius: 7px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 22px;
+        }
+
+        @media(max-width: 480px) {
+            .register-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-card">
+
+    <div class="brand">
+        <div class="logo">S</div>
+        <h1>StockWise</h1>
+        <p>INVENTORY & SALES MANAGEMENT</p>
+    </div>
+
+    <h2>Create Your Account</h2>
+    <p class="subtitle">Start managing your business smarter.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('register') }}">
+
+        <div class="field">
+            <label>Business Name</label>
+            <input type="text" name="business_name"
+                   placeholder="Enter your business name"
+                   required>
+        </div>
+
+        <div class="field">
+            <label>Owner Username</label>
+            <input type="text" name="username"
+                   placeholder="Create your username"
+                   minlength="3" required>
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <div class="password-wrap">
+                <input type="password" id="password"
+                       name="password"
+                       placeholder="Create a password"
+                       minlength="8" required>
+                <button type="button" class="toggle"
+                        onclick="togglePassword()">
+                    Show
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Create Business Account
+        </button>
+
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </div>
+
+    <div class="footer">
+        StockWise · Track · Manage · Grow
+    </div>
+
+</div>
+
+<script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const button = document.querySelector(".toggle");
+
+        if (password.type === "password") {
+            password.type = "text";
+            button.textContent = "Hide";
+        } else {
+            password.type = "password";
+            button.textContent = "Show";
+        }
+    }
+</script>
+
+</body>
+</html>

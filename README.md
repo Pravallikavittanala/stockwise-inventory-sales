@@ -1,67 +1,67 @@
 # StockWise – Inventory and Sales Management for Small Business
 
 ## Project Overview
-StockWise is a web-based Inventory and Sales Management System developed using Python Flask and MySQL. It helps small businesses manage products, monitor stock levels, record sales transactions, and generate sales reports.
+
+StockWise is a web-based Inventory and Sales Management System developed to help small businesses manage products, monitor stock levels, record sales transactions, and generate sales reports efficiently.
+
+The application provides separate Admin and Staff accounts with role-based access control to ensure that users can access only the features permitted to their roles.
 
 ## Features
 
-- **Dashboard:** Displays product count, available stock, low-stock count, and total sales.
-- **Product Management:** Add, view, search, edit, and delete products.
-- **Sales Management:** Record sales and automatically update product stock.
-- **Reports:** View daily sales and product-wise stock and sales summaries.
-- **User Authentication:** Secure login and logout functionality.
-- **Role-Based Access:** Separate Admin and Staff permissions.
-- **User Management:** Admin can create and manage staff accounts.
+- **Admin and Staff Login:** Separate user accounts with secure password hashing.
+- **Dashboard:** View inventory and sales information.
+- **Product Management:** Add, edit, delete, and view product details.
+- **Stock Management:** Monitor product quantities and low-stock levels.
+- **Sales Management:** Record sales transactions.
+- **Automatic Stock Deduction:** Update product quantities automatically after a sale.
+- **User Management:** Admin can create and manage user accounts.
+- **Sales Reports:** Admin can access sales reports.
+- **Role-Based Access:** Restrict administrative features to Admin users.
+
+## Technologies Used
+
+| Component | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python, Flask |
+| Database | MySQL |
+| Authentication | Flask-Login |
+| Password Security | Werkzeug |
+| Database Connectivity | MySQL Connector |
+| Configuration | Python Dotenv |
 
 ## User Roles
 
 ### Admin
-- Access the dashboard.
 - Manage products.
+- Add and manage users.
 - Record and view sales.
-- View reports.
-- Add and manage staff users.
+- Access sales reports.
+- View inventory information.
 
 ### Staff
-- Access the dashboard.
 - View products.
-- Record sales.
-- Cannot access admin-only reports or user management.
-
-## Technologies Used
-
-- Python
-- Flask
-- MySQL
-- HTML
-- CSS
-- JavaScript
-- Flask-Login
-- Werkzeug Password Hashing
+- Record sales transactions.
+- View permitted application pages.
+- Cannot access Admin-only reports or user management.
 
 ## Project Structure
 
 ```text
-stockwise-inventory-sales/
+inventory_sales_management/
 │
 ├── app.py
 ├── database.py
 ├── schema.sql
 ├── requirements.txt
 ├── README.md
-├── .gitignore
 │
 ├── templates/
 │   ├── base.html
-│   ├── dashboard.html
 │   ├── login.html
+│   ├── setup_admin.html
 │   ├── products.html
-│   ├── product_form.html
-│   ├── sales.html
-│   ├── reports.html
-│   ├── users.html
-│   ├── user_form.html
-│   └── setup_admin.html
+│   └── ...
 │
 └── static/
     ├── style.css
@@ -70,45 +70,88 @@ stockwise-inventory-sales/
 
 ## Installation and Setup
 
-1. Clone this repository.
-2. Install the required Python packages:
+### 1. Clone the Repository
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+git clone https://github.com/YOUR-USERNAME/stockwise-inventory-sales.git
+```
 
-3. Install and start MySQL Server.
-4. Create the database and tables using `schema.sql`.
-5. Configure your database connection details in a local `.env` file according to `database.py`.
-6. Run the Flask application:
+### 2. Navigate to the Project Folder
 
-   ```bash
-   python app.py
-   ```
+```bash
+cd stockwise-inventory-sales
+```
 
-7. Open your browser and visit:
+### 3. Install Dependencies
 
-   `http://127.0.0.1:5000`
+```bash
+pip install -r requirements.txt
+```
 
-## Security
+### 4. Configure Environment Variables
 
-- Passwords are stored using password hashing.
-- Login sessions are managed using Flask-Login.
-- Access to admin features is restricted by user role.
-- Database credentials must be stored in `.env`.
-- Never upload `.env` or passwords to GitHub.
+Create a `.env` file in the project directory.
+
+Add your own database configuration:
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=inventory_sales
+SECRET_KEY=your_secret_key
+```
+
+Do not upload the `.env` file or expose database credentials publicly.
+
+### 5. Set Up the Database
+
+Create the MySQL database and execute the SQL commands provided in `schema.sql`.
+
+### 6. Run the Application
+
+```bash
+python app.py
+```
+
+Open the following address in your browser:
+
+```text
+http://127.0.0.1:5000
+```
+
+## Testing
+
+The application has been functionally tested for:
+
+- Admin and Staff login and logout.
+- Role-based navigation.
+- Restriction of Staff access to Admin-only reports.
+- Product management.
+- Sales recording.
+- Automatic stock deduction after successful sales.
+- Admin report access.
 
 ## Future Enhancements
 
-- Online deployment.
-- Inventory alerts and notifications.
-- Advanced sales analytics.
+- Graphical sales analytics.
+- Invoice generation.
+- Supplier management.
 - Export reports to PDF and Excel.
+- Cloud deployment and online database integration.
 
-## Project Purpose
+## Project Team
 
-This project is developed as an academic mini-project to demonstrate inventory management, sales tracking, database connectivity, and web application development.
+**Department:** Artificial Intelligence and Data Science  
+**Institution:** CMR Institute of Technology
 
-**Project Name:** Inventory and Sales Management for Small Business  
-**Institute:** CMR Institute of Technology  
-**Department:** Artificial Intelligence and Data Science
+- Pravallika Vittanala – 1CR24AD086
+- Nisarga Mary – 1CR24AD075
+- Sindhu S – 1CR24AD117
+
+**Project Guide:** Prof. Bhavana
+
+## License
+
+This project is developed for academic purposes as a Semester V mini-project.
